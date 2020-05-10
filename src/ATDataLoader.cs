@@ -15,6 +15,8 @@ public class ATDataLoader {
 		string dataFolder = ATFile.FindFolder("data") + "/";
 		ClanCSVFile clanFile = new ClanCSVFile(dataFolder + "clan.csv");
 		CSVFileDecoder decoder = new CSVFileDecoder(dataFolder + "brick.csv");
+
+		Plane.LoadPlanes();
 	}
 
 	public static void LoadMusicData() {

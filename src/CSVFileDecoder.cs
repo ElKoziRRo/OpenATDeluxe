@@ -7,11 +7,9 @@ using System.Linq;
 using File = Godot.File;
 
 public class CSVFileDecoder : BaseFileDecoder {
-	public CSVFileDecoder(string _filePath) : base(_filePath) {
+	public CSVFileDecoder(string _filePath) : base(_filePath) { }
 
-	}
-
-	public Dictionary<string, List<string>> GetCSVDictionary() {
+	public Dictionary<string, List<string>> GetCSVDictionaryHeaderSorted() {
 		Dictionary<string, List<string>> csv = new Dictionary<string, List<string>>();
 
 		using (var reader = new StringReader(fileData)) {
@@ -44,6 +42,38 @@ public class CSVFileDecoder : BaseFileDecoder {
 
 				for (int i = 0; i < values.Length; i++) {
 					csv[csv.Keys.ElementAt(i)].Add(values[i]); //Add the value to the corresponding csv part.
+				}
+			}
+		}
+
+		return csv;
+	}
+
+	public List<Dictionary<string, string>> GetCSVDictionaryLineSeperated() {
+		List<Dictionary<string, string>> csv = new List<Dictionary<string, string>>();
+
+		using (var reader = new StringReader(fileData)) {
+			string header = reader.ReadLine();
+			var headerValues = header.Split(';');
+
+			var baseDict = new Dictionary<string, string>();
+
+			foreach (string v in headerValues) {
+				baseDict.Add(v, "");
+			}
+
+			while ((reader.Peek() > -1)) { //Go until there is no more
+				var values = reader.ReadLine().Split(';');//Content
+				var line = new Dictionary<string, string>(baseDict); //Copy "template"
+				csv.Add(line);
+
+				if (values.Length == 0)
+					continue; //Empty line!
+
+
+
+				for (int i = 0; i < values.Length; i++) {
+					line[line.Keys.ElementAt(i)] = values[i]; //Add the value to the corresponding csv part.
 				}
 			}
 		}
