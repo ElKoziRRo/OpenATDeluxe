@@ -19,7 +19,7 @@ public class LocalizationManager {
 		instance = this;
 		stacks = new List<LocalizationStack>();
 
-		string[] locFiles = System.IO.Directory.GetFiles(GFXLibrary.pathToAirlineTycoonD + "/misc/", "*.res");
+		string[] locFiles = System.IO.Directory.GetFiles(SettingsManager.ATDGamePath + "/misc/", "*.res");
 
 		List<LocalizationFile> files = new List<LocalizationFile>();
 

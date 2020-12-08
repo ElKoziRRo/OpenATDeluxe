@@ -1,18 +1,21 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://src/Speech/DialogueSystem.cs" type="Script" id=1]
 [ext_resource path="res://data/masks/callMask.png" type="Texture" id=2]
 [ext_resource path="res://Images/gli/glberatr/BER92_01.res" type="Texture" id=3]
 [ext_resource path="res://Prefabs/Speech/Speechbubble.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/Speech/PlayerDialogueWindow.cs" type="Script" id=5]
+[ext_resource path="res://materials/cutoutPreMult.tres" type="Material" id=6]
 
 [sub_resource type="ViewportTexture" id=1]
 viewport_path = NodePath("TelephoneManager/OtherTelephoneRoom")
 
 [node name="DialogueSystem" type="Node2D"]
+z_index = -1
 script = ExtResource( 1 )
 
 [node name="TelephoneManager" type="Node2D" parent="."]
+z_index = -1
 
 [node name="OtherTelephoneRoom" type="Viewport" parent="TelephoneManager"]
 size = Vector2( 1920, 1080 )
@@ -39,6 +42,7 @@ range_layer_max = 10
 range_item_cull_mask = 2
 
 [node name="PlayerIcon" type="Sprite" parent="."]
+material = ExtResource( 6 )
 position = Vector2( 110, 850 )
 scale = Vector2( 2.5, 2.5 )
 texture = ExtResource( 3 )
@@ -53,25 +57,12 @@ margin_bottom = 883.0
 script = ExtResource( 5 )
 iconPath = NodePath("../PlayerIcon")
 
-[node name="LeftSide" parent="PL/SpeechbubbleFlexible" index="0"]
-margin_right = 684.0
-margin_bottom = 63.0
-
-[node name="Texture" parent="PL/SpeechbubbleFlexible/LeftSide" index="0"]
-margin_right = 718.0
-margin_bottom = 63.0
-
-[node name="RightSide" parent="PL/SpeechbubbleFlexible" index="1"]
-margin_left = 684.0
-margin_right = 1368.0
-margin_bottom = 63.0
-
-[node name="Flip" parent="PL/SpeechbubbleFlexible/RightSide" index="0"]
-margin_right = 684.0
-margin_bottom = 63.0
-
-[node name="Texture" parent="PL/SpeechbubbleFlexible/RightSide/Flip" index="0"]
-rect_pivot_offset = Vector2( 358.5, 31.5 )
+[node name="Head" parent="PL" index="3"]
+margin_left = -681.0
+margin_top = -12.565
+margin_right = -664.0
+margin_bottom = 2.435
+rect_rotation = 90.0
 
 [node name="PLOffice" parent="." instance=ExtResource( 4 )]
 visible = false
@@ -82,27 +73,7 @@ margin_top = 262.0
 margin_right = 1522.0
 margin_bottom = 325.0
 
-[node name="LeftSide" parent="PLOffice/SpeechbubbleFlexible" index="0"]
-margin_right = 736.0
-margin_bottom = 63.0
-
-[node name="Texture" parent="PLOffice/SpeechbubbleFlexible/LeftSide" index="0"]
-margin_right = 770.0
-margin_bottom = 63.0
-
-[node name="RightSide" parent="PLOffice/SpeechbubbleFlexible" index="1"]
-margin_left = 736.0
-margin_right = 1472.0
-margin_bottom = 63.0
-
-[node name="Flip" parent="PLOffice/SpeechbubbleFlexible/RightSide" index="0"]
-margin_right = 736.0
-margin_bottom = 63.0
-
-[node name="Texture" parent="PLOffice/SpeechbubbleFlexible/RightSide/Flip" index="0"]
-rect_pivot_offset = Vector2( 384.5, 31.5 )
-
-[node name="Head" parent="PLOffice" index="2"]
+[node name="Head" parent="PLOffice" index="3"]
 margin_left = -265.0
 margin_top = 30.4516
 margin_right = -248.0

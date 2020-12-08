@@ -19,19 +19,19 @@ public class ATFile {
 
 	public static string FindFile(string file) {
 		string subFolder = "";
-		if (file.StartsWith(GFXLibrary.pathToAirlineTycoonD)) {
-			string temp = file.Remove(0, GFXLibrary.pathToAirlineTycoonD.Length);
+		if (file.StartsWith(SettingsManager.ATDGamePath)) {
+			string temp = file.Remove(0, SettingsManager.ATDGamePath.Length);
 			subFolder = Path.GetDirectoryName(temp);
 		}
 
 		string fileName = Path.GetFileName(file);
 
-		string searchPath = GFXLibrary.pathToAirlineTycoonD;
+		string searchPath = SettingsManager.ATDGamePath;
 		return Directory.GetFiles(searchPath, fileName, System.IO.SearchOption.AllDirectories).First();
 	}
 
 	public static string FindFolder(string folderName) {
-		string basePath = GFXLibrary.pathToAirlineTycoonD;
+		string basePath = SettingsManager.ATDGamePath;
 		return Directory.GetDirectories(basePath, folderName, System.IO.SearchOption.AllDirectories).First();
 	}
 }

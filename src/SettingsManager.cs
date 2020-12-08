@@ -4,6 +4,23 @@ using System.Linq;
 using System.Reflection;
 
 public static class SettingsManager {
+	private static ConfigFile file = new ConfigFile();
+	private static bool loadedSettings = false;
+
+	static SettingsManager() {
+		LoadSettingsfile();
+	}
+
+	private static void LoadSettingsfile() {
+
+		GD.Print("Loaded!");
+		settingsPath = (string)ProjectSettings.GetSetting("application/config/project_settings_override");
+
+		file.Load(settingsPath);
+
+		loadedSettings = true;
+	}
+
 	#region static values
 	public static SettingsValue<int> planesVolume = new SettingsValue<int>(
 					() => (int)AudioServer.GetBusVolumeDb(2),
@@ -53,15 +70,20 @@ public static class SettingsManager {
 	public static SettingsValue<bool> roundNumbers = new SettingsValue<bool>("other/roundNumbers");
 	public static SettingsValue<bool> gameStartToday = new SettingsValue<bool>("other/gameStartToday");
 
-	#endregion
-	private static string settingsPath;
-	private static ConfigFile file = new ConfigFile();
+	public static SettingsValue<string> atdGamePath = new SettingsValue<string>("application/config/atd_path");
 
-	static SettingsManager() {
-		settingsPath = (string)ProjectSettings.GetSetting("application/config/project_settings_override");
-
-		file.Load(settingsPath);
+	public static string ATDGamePath {
+		get {
+			return atdGamePath.GetValue();
+		}
+		set {
+			atdGamePath.SetValue(value);
+		}
 	}
+	#endregion
+
+	private static string settingsPath;
+
 
 	public static void LoadSavedData() {
 		var fields = typeof(SettingsManager).GetFields(BindingFlags.Public | BindingFlags.Static)
@@ -85,13 +107,27 @@ public static class SettingsManager {
 		string section = GetSection(name);
 		string key = GetKey(name);
 
+
+		if (file == null) {
+			LoadSettingsfile();
+		}
+
 		file.SetValue(section, key, value);
 		file.Save(settingsPath);
 	}
 
 	public static object GetSetting(string name, object @default = null) {
+		if (SettingsManager.loadedSettings == false)
+			LoadSettingsfile();
+
 		string section = GetSection(name);
 		string key = GetKey(name);
+
+		if (file == null) {
+			LoadSettingsfile();
+		}
+
+		GD.Print($"GetSetting for: {name}!");
 
 		if (!file.HasSectionKey(section, key)) {
 			SetSetting(name, @default);
@@ -115,8 +151,12 @@ public class SettingsValue<T> : ISettingsValue {
 	public SettingsValue(string settingsName) {
 		this.settingsName = settingsName;
 
+		value = default(T);
+
 		SetValue = (input) => { value = input; SettingsManager.SetSetting(this.settingsName, value); };
 		GetValue = () => value;
+
+		Load();
 	}
 
 	public SettingsValue(Func<T> getValue, Action<T> setValue, string settingsName) {
@@ -125,6 +165,8 @@ public class SettingsValue<T> : ISettingsValue {
 		this.settingsName = settingsName;
 
 		SetValue += (value) => { SettingsManager.SetSetting(this.settingsName, value); };
+
+		Load();
 	}
 
 	public void Load() {
@@ -135,6 +177,8 @@ public class SettingsValue<T> : ISettingsValue {
 		if (type.IsValueType) {
 			return Activator.CreateInstance(type);
 		}
+		if (type == typeof(string))
+			return "";
 		return null;
 	}
 }

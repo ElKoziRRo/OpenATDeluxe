@@ -26,13 +26,12 @@ public class ATDGameLoader : Node2D {
 		loadInfo = GetNode<Label>("LoadInfo");
 		loadInfoFiles = GetNode<Label>("LoadInfoFiles");
 
-		GFXLibrary.pathToAirlineTycoonD = (string)SettingsManager.GetSetting(ATDPathConfig, "");
-		GD.Print(GFXLibrary.pathToAirlineTycoonD);
+		GD.Print(SettingsManager.ATDGamePath);
 
 		isInEditor = IsInEditor();
 
 		//Is the current GFXLibrary.pathToAirlineTycoonD  folder, the correct folder?
-		if (!IsOriginalGamePath(GFXLibrary.pathToAirlineTycoonD)) {
+		if (!IsOriginalGamePath(SettingsManager.ATDGamePath)) {
 			SetNewGamePath();//Correct the error!
 			return; //We decide later, whether the files need to be updated!
 		}
@@ -47,7 +46,7 @@ public class ATDGameLoader : Node2D {
 			if (!Directory.Exists(dir))
 				throw new System.IO.DirectoryNotFoundException(dir);
 
-			GFXLibrary.pathToAirlineTycoonD = dir;
+			SettingsManager.ATDGamePath = dir;
 
 			ATFile.FindFolder("room");
 			ATFile.FindFile("glbasis.gli");
@@ -59,7 +58,7 @@ public class ATDGameLoader : Node2D {
 		}
 	}
 	private static string FindFolder(string folderName, string basePath = "") {
-		basePath = basePath == "" ? GFXLibrary.pathToAirlineTycoonD : basePath;
+		basePath = basePath == "" ? SettingsManager.ATDGamePath : basePath;
 		return Directory.GetDirectories(basePath, folderName, System.IO.SearchOption.AllDirectories).First();
 	}
 
@@ -106,8 +105,7 @@ public class ATDGameLoader : Node2D {
 		}
 		//ValidateFiles();
 
-		SettingsManager.SetSetting(ATDPathConfig, dir);
-		GFXLibrary.pathToAirlineTycoonD = dir;
+		SettingsManager.ATDGamePath = dir;
 		LoadFiles();
 	}
 

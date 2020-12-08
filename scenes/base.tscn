@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=2]
+[gd_scene load_steps=53 format=2]
 
 [ext_resource path="res://src/GameController.cs" type="Script" id=1]
 [ext_resource path="res://src/RoomManager.cs" type="Script" id=2]
@@ -24,6 +24,7 @@
 [ext_resource path="res://Images/gli/glstd/STATLIN0.res" type="Texture" id=22]
 [ext_resource path="res://Images/gli/glstd/LOGO1.res" type="Texture" id=23]
 [ext_resource path="res://Prefabs/DialogueSystem.tscn" type="PackedScene" id=24]
+[ext_resource path="res://fonts/GenericFont.tres" type="DynamicFont" id=25]
 [ext_resource path="res://src/MouseCursor.cs" type="Script" id=26]
 [ext_resource path="res://Images/gli/glbasis/CURSOR.res" type="Texture" id=27]
 [ext_resource path="res://Images/gli/glbasis/CURSORH.res" type="Texture" id=28]
@@ -45,6 +46,11 @@
 [ext_resource path="res://src/MusicController.cs" type="Script" id=44]
 [ext_resource path="res://addons/midi/MidiPlayer.gd" type="Script" id=45]
 [ext_resource path="res://addons/midi/icon.png" type="Texture" id=46]
+[ext_resource path="res://src/Gameplay/Items/Taskbar.cs" type="Script" id=47]
+[ext_resource path="res://data/textures/Taskbar/clock.png" type="Texture" id=48]
+[ext_resource path="res://data/textures/Taskbar/finance.png" type="Texture" id=49]
+[ext_resource path="res://materials/bilinearFilter.tres" type="Material" id=50]
+[ext_resource path="res://src/Debug/EventDebugView.cs" type="Script" id=51]
 
 [sub_resource type="SpriteFrames" id=1]
 resource_local_to_scene = true
@@ -58,119 +64,37 @@ animations = [ {
 [node name="Game" type="Node2D"]
 pause_mode = 1
 script = ExtResource( 1 )
-_taskbar = NodePath("UI/MarginContainer/Taskbar")
+_taskbar = NodePath("UI/GameUIRoot/MarginContainer/Taskbar")
+_UI = NodePath("UI/GameUIRoot")
 
-[node name="Scene" type="Node2D" parent="."]
+[node name="ViewportContainer" type="ViewportContainer" parent="."]
+material = ExtResource( 50 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1920.0
+margin_bottom = 1080.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="ViewportContainer"]
+size = Vector2( 1920, 1080 )
+transparent_bg = true
+handle_input_locally = false
+msaa = 3
+disable_3d = true
+usage = 0
+debug_draw = 1
+render_target_update_mode = 3
+physics_object_picking = true
+
+[node name="Scene" type="Node2D" parent="ViewportContainer/Viewport"]
 script = ExtResource( 2 )
 _rooms = [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ) ]
 
 [node name="UI" type="CanvasLayer" parent="."]
 layer = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="UI"]
-margin_right = 40.0
-margin_bottom = 40.0
-rect_scale = Vector2( 2.5, 2.5 )
-mouse_filter = 1
-custom_constants/margin_right = 0
-custom_constants/margin_top = 0
-custom_constants/margin_left = 0
-custom_constants/margin_bottom = 0
-
-[node name="Taskbar" type="Control" parent="UI/MarginContainer"]
-margin_right = 40.0
-margin_bottom = 40.0
-mouse_filter = 1
-
-[node name="background" type="ColorRect" parent="UI/MarginContainer/Taskbar"]
-margin_top = 392.0
-margin_right = 638.0
-margin_bottom = 432.0
-color = Color( 0, 0, 0, 1 )
-
-[node name="GridContainer" type="GridContainer" parent="UI/MarginContainer/Taskbar"]
-margin_left = 247.0
-margin_top = 413.0
-margin_right = 609.423
-margin_bottom = 413.0
-grow_horizontal = 2
-custom_constants/hseparation = 60
-columns = 8
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Control" type="Control" parent="UI/MarginContainer/Taskbar/GridContainer"]
-
-[node name="STATLIN5" type="Sprite" parent="UI/MarginContainer/Taskbar/GridContainer/Control"]
-position = Vector2( 29.2245, -1.19644 )
-texture = ExtResource( 18 )
-
-[node name="Control2" type="Control" parent="UI/MarginContainer/Taskbar/GridContainer"]
-margin_left = 60.0
-margin_right = 60.0
-
-[node name="STATLIN5" type="Sprite" parent="UI/MarginContainer/Taskbar/GridContainer/Control2"]
-position = Vector2( 29.2245, -1.19644 )
-texture = ExtResource( 18 )
-
-[node name="Control3" type="Control" parent="UI/MarginContainer/Taskbar/GridContainer"]
-margin_left = 120.0
-margin_right = 120.0
-
-[node name="STATLIN5" type="Sprite" parent="UI/MarginContainer/Taskbar/GridContainer/Control3"]
-position = Vector2( 29.2245, -1.19644 )
-texture = ExtResource( 18 )
-
-[node name="Control4" type="Control" parent="UI/MarginContainer/Taskbar/GridContainer"]
-margin_left = 180.0
-margin_right = 180.0
-
-[node name="STATLIN5" type="Sprite" parent="UI/MarginContainer/Taskbar/GridContainer/Control4"]
-position = Vector2( 29.2245, -1.19644 )
-texture = ExtResource( 18 )
-
-[node name="Control6" type="Control" parent="UI/MarginContainer/Taskbar/GridContainer"]
-margin_left = 240.0
-margin_right = 240.0
-
-[node name="STATLIN5" type="Sprite" parent="UI/MarginContainer/Taskbar/GridContainer/Control6"]
-position = Vector2( 29.2245, -1.19644 )
-texture = ExtResource( 18 )
-
-[node name="Control7" type="Control" parent="UI/MarginContainer/Taskbar/GridContainer"]
-margin_left = 300.0
-margin_right = 300.0
-
-[node name="STATLIN5" type="Sprite" parent="UI/MarginContainer/Taskbar/GridContainer/Control7"]
-position = Vector2( 29.2245, -1.19644 )
-texture = ExtResource( 18 )
-
-[node name="Control5" type="Control" parent="UI/MarginContainer/Taskbar/GridContainer"]
-margin_left = 360.0
-margin_right = 360.0
-
-[node name="STATLIN6" type="Sprite" parent="UI/MarginContainer/Taskbar/GridContainer/Control5"]
-material = ExtResource( 19 )
-position = Vector2( 15.1812, -1.22086 )
-texture = ExtResource( 20 )
-
-[node name="STAT01" type="Sprite" parent="UI/MarginContainer/Taskbar/GridContainer/Control5"]
-material = ExtResource( 19 )
-position = Vector2( 11.6365, 9.1442 )
-texture = ExtResource( 21 )
-
-[node name="STATLIN0" type="Sprite" parent="UI/MarginContainer/Taskbar"]
-material = ExtResource( 19 )
-position = Vector2( 124, 411.779 )
-texture = ExtResource( 22 )
-
-[node name="LOGO1" type="Sprite" parent="UI/MarginContainer/Taskbar"]
-position = Vector2( 38.3176, 411.779 )
-texture = ExtResource( 23 )
-
-[node name="DialogueSystem" parent="UI/MarginContainer/Taskbar" instance=ExtResource( 24 )]
-scale = Vector2( 0.4, 0.4 )
 
 [node name="MouseController" type="Node2D" parent="UI"]
 material = ExtResource( 19 )
@@ -198,7 +122,7 @@ centered = false
 use_parent_material = true
 position = Vector2( -15.5213, -12.6841 )
 frames = SubResource( 1 )
-frame = 4
+frame = 7
 playing = true
 centered = false
 
@@ -211,6 +135,301 @@ texture = ExtResource( 42 )
 use_parent_material = true
 position = Vector2( -15.5659, 0.0537109 )
 texture = ExtResource( 43 )
+
+[node name="GameUIRoot" type="Control" parent="UI"]
+margin_right = 40.0
+margin_bottom = 40.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/GameUIRoot"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_scale = Vector2( 2.5, 2.5 )
+mouse_filter = 1
+custom_constants/margin_right = 0
+custom_constants/margin_top = 0
+custom_constants/margin_left = 0
+custom_constants/margin_bottom = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Taskbar" type="Control" parent="UI/GameUIRoot/MarginContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+mouse_filter = 1
+script = ExtResource( 47 )
+cashNode = NodePath("../../../GameUIRoot/MarginContainer/Taskbar/STATLIN0/Cash")
+clockNode = NodePath("../../../GameUIRoot/MarginContainer/Taskbar/STATLIN0/Clock")
+
+[node name="background" type="ColorRect" parent="UI/GameUIRoot/MarginContainer/Taskbar"]
+margin_top = 392.0
+margin_right = 768.0
+margin_bottom = 432.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer" type="GridContainer" parent="UI/GameUIRoot/MarginContainer/Taskbar"]
+margin_left = 299.0
+margin_top = 413.0
+margin_right = 684.0
+margin_bottom = 413.0
+grow_horizontal = 2
+rect_scale = Vector2( 1.2, 1 )
+custom_constants/hseparation = 60
+columns = 8
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="UI/GameUIRoot/MarginContainer/Taskbar/GridContainer"]
+
+[node name="STATLIN5" type="Sprite" parent="UI/GameUIRoot/MarginContainer/Taskbar/GridContainer/Control"]
+position = Vector2( 29.2245, -1.19644 )
+texture = ExtResource( 18 )
+
+[node name="Control2" type="Control" parent="UI/GameUIRoot/MarginContainer/Taskbar/GridContainer"]
+margin_left = 60.0
+margin_right = 60.0
+
+[node name="STATLIN5" type="Sprite" parent="UI/GameUIRoot/MarginContainer/Taskbar/GridContainer/Control2"]
+position = Vector2( 29.2245, -1.19644 )
+texture = ExtResource( 18 )
+
+[node name="Control3" type="Control" parent="UI/GameUIRoot/MarginContainer/Taskbar/GridContainer"]
+margin_left = 120.0
+margin_right = 120.0
+
+[node name="STATLIN5" type="Sprite" parent="UI/GameUIRoot/MarginContainer/Taskbar/GridContainer/Control3"]
+position = Vector2( 29.2245, -1.19644 )
+texture = ExtResource( 18 )
+
+[node name="Control4" type="Control" parent="UI/GameUIRoot/MarginContainer/Taskbar/GridContainer"]
+margin_left = 180.0
+margin_right = 180.0
+
+[node name="STATLIN5" type="Sprite" parent="UI/GameUIRoot/MarginContainer/Taskbar/GridContainer/Control4"]
+position = Vector2( 29.2245, -1.19644 )
+texture = ExtResource( 18 )
+
+[node name="Control6" type="Control" parent="UI/GameUIRoot/MarginContainer/Taskbar/GridContainer"]
+margin_left = 240.0
+margin_right = 240.0
+
+[node name="STATLIN5" type="Sprite" parent="UI/GameUIRoot/MarginContainer/Taskbar/GridContainer/Control6"]
+position = Vector2( 29.2245, -1.19644 )
+texture = ExtResource( 18 )
+
+[node name="Control7" type="Control" parent="UI/GameUIRoot/MarginContainer/Taskbar/GridContainer"]
+margin_left = 300.0
+margin_right = 300.0
+
+[node name="STATLIN5" type="Sprite" parent="UI/GameUIRoot/MarginContainer/Taskbar/GridContainer/Control7"]
+position = Vector2( 29.2245, -1.19644 )
+texture = ExtResource( 18 )
+
+[node name="Control5" type="Control" parent="UI/GameUIRoot/MarginContainer/Taskbar/GridContainer"]
+margin_left = 360.0
+margin_right = 360.0
+
+[node name="STATLIN6" type="Sprite" parent="UI/GameUIRoot/MarginContainer/Taskbar/GridContainer/Control5"]
+material = ExtResource( 19 )
+position = Vector2( 15.1812, -1.22086 )
+texture = ExtResource( 20 )
+
+[node name="STAT01" type="Sprite" parent="UI/GameUIRoot/MarginContainer/Taskbar/GridContainer/Control5"]
+material = ExtResource( 19 )
+position = Vector2( 11.6365, 9.1442 )
+texture = ExtResource( 21 )
+
+[node name="STATLIN0" type="Sprite" parent="UI/GameUIRoot/MarginContainer/Taskbar"]
+material = ExtResource( 50 )
+position = Vector2( 149, 411.779 )
+scale = Vector2( 1.2, 1 )
+texture = ExtResource( 22 )
+
+[node name="clock" type="TextureRect" parent="UI/GameUIRoot/MarginContainer/Taskbar/STATLIN0"]
+margin_left = -46.0
+margin_top = -20.0
+margin_right = -23.0
+margin_bottom = 1.0
+texture = ExtResource( 48 )
+expand = true
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="finance" type="TextureRect" parent="UI/GameUIRoot/MarginContainer/Taskbar/STATLIN0"]
+margin_left = -46.0
+margin_top = 1.0
+margin_right = -23.0
+margin_bottom = 20.0
+texture = ExtResource( 49 )
+expand = true
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Clock" type="Label" parent="UI/GameUIRoot/MarginContainer/Taskbar/STATLIN0"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = -13.0
+margin_top = -60.0
+margin_right = 108.0
+margin_bottom = -38.0
+rect_scale = Vector2( 0.5, 0.5 )
+custom_fonts/font = ExtResource( 25 )
+custom_colors/font_color = Color( 0.211765, 0.882353, 0.196078, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+text = "Fr   11:08"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cash" type="Label" parent="UI/GameUIRoot/MarginContainer/Taskbar/STATLIN0"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = -13.176
+margin_top = -40.7063
+margin_right = 131.824
+margin_bottom = 2.2937
+rect_scale = Vector2( 0.5, 0.5 )
+custom_fonts/font = ExtResource( 25 )
+custom_colors/font_color = Color( 0.211765, 0.882353, 0.196078, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+text = "1.500.000"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LOGO1" type="Sprite" parent="UI/GameUIRoot/MarginContainer/Taskbar"]
+position = Vector2( 46.3848, 411.779 )
+scale = Vector2( 1.2, 1 )
+texture = ExtResource( 23 )
+
+[node name="DialogueSystem" parent="UI/GameUIRoot/MarginContainer" instance=ExtResource( 24 )]
+scale = Vector2( 0.4, 0.4 )
+z_index = 0
+
+[node name="DebugUIRoot" type="Control" parent="UI"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -461.0
+margin_top = 25.0
+margin_right = -31.9999
+margin_bottom = 390.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="UI/DebugUIRoot"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.168627, 0.168627, 0.168627, 0.25098 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/DebugUIRoot"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="UI/DebugUIRoot/VBoxContainer"]
+margin_right = 429.0
+margin_bottom = 14.0
+text = "Debug Menu"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TabContainer" type="TabContainer" parent="UI/DebugUIRoot/VBoxContainer"]
+margin_top = 18.0
+margin_right = 429.0
+margin_bottom = 365.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+tab_align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EventManager" type="VBoxContainer" parent="UI/DebugUIRoot/VBoxContainer/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+script = ExtResource( 51 )
+_currentTime = NodePath("CurrentTime")
+_eventsInQueueView = NodePath("Views/Events in Queue/RichTextLabel")
+_eventsFinishedView = NodePath("Views/Finished Events/RichTextLabel")
+
+[node name="CurrentTime" type="Label" parent="UI/DebugUIRoot/VBoxContainer/TabContainer/EventManager"]
+margin_right = 421.0
+margin_bottom = 14.0
+text = "Current Time: W1D0 15:02T21"
+
+[node name="Views" type="TabContainer" parent="UI/DebugUIRoot/VBoxContainer/TabContainer/EventManager"]
+margin_top = 18.0
+margin_right = 421.0
+margin_bottom = 311.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Events in Queue" type="ScrollContainer" parent="UI/DebugUIRoot/VBoxContainer/TabContainer/EventManager/Views"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/DebugUIRoot/VBoxContainer/TabContainer/EventManager/Views/Events in Queue"]
+margin_right = 413.0
+margin_bottom = 257.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Event
+ StartTime: W1D0 15:02T24"
+
+[node name="Finished Events" type="ScrollContainer" parent="UI/DebugUIRoot/VBoxContainer/TabContainer/EventManager/Views"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/DebugUIRoot/VBoxContainer/TabContainer/EventManager/Views/Finished Events"]
+margin_right = 413.0
+margin_bottom = 257.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "N"
 
 [node name="MusicController" type="Node2D" parent="."]
 script = ExtResource( 44 )

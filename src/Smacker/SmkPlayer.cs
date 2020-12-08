@@ -95,7 +95,7 @@ public class SmkPlayer : Sprite {
 
 	protected Stream fileStream;
 	protected void LoadSmacker(bool loadFileToMemory = true) {
-		string filePath = GFXLibrary.pathToAirlineTycoonD + fileName;
+		string filePath = SettingsManager.ATDGamePath + fileName;
 		if (!System.IO.File.Exists(filePath)) {
 			filePath = ATFile.FindFile(System.IO.Path.GetFileName(fileName));
 		}

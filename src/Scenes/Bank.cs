@@ -10,18 +10,18 @@ public class Bank : BaseRoom {
 	public override void OnReady() {
 		Vector2 playerPos = new Vector2(-280, -90);
 
-		loanAnims.basePosition = new Vector2(-142, -73);
-		sharesAnims.basePosition = new Vector2(33, -63);
+		loanAnims.basePosition = new Vector2(-77, -72);
+		sharesAnims.basePosition = new Vector2(98, -62.5f);
 		loanAnims.CreateMouseArea(baseNode);
 		sharesAnims.CreateMouseArea(baseNode);
 
 		DialogueSystem.AddActor(new Actor("BA", (DialogueWindow)FindNode("BA")));
-		DialogueSystem.AddActor(new Actor("B2", (DialogueWindow)FindNode("B2"), 520));
+		DialogueSystem.AddActor(new Actor("B2", (DialogueWindow)FindNode("B2"), new Vector2(520, 0), new Vector2(120, 0), new Vector2(520, 0)));
 
 		Dialogue loanDialogue = new Dialogue("Bank", nameof(loanDialogue), "B2");
 		{ // loan
 			loanDialogue.AddOnTelephoneNode(new DialogueNodeReturning(150));
-			
+
 			DialogueNode startLoan = new DialogueNode(109);
 			DialogueNodeReturning noNewLoan = new DialogueNodeReturning(120);
 			DialogueNodeReturning noReturningOfLoan = new DialogueNodeReturning(140);

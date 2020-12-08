@@ -3,16 +3,27 @@ using System;
 using System.Threading.Tasks;
 
 public class GameController : Node2D {
+	#region Event Callbacks
+
+	/// <summary>
+	/// Gets called every in game tick
+	/// </summary>
+	public static Action onTick;
+	public static Action onUnhandledInput;
+
+	public static Action<GameMode> onGameModeChanged;
+
+	#endregion
+
+	GameMode currentGameMode;
+	public GameMode CurrentGameMode { get => currentGameMode; private set { currentGameMode = value; } }
+
 	public static GameController instance;
 
-	// static GameController() {
-	// 	void HandleTaskException(object e) {
-	// 		Task t = e as Task;
-	//
-	// 		GD.Print($"Unhandled exception in task!\n{t.Exception.InnerException.Message}\n{t.Exception.InnerException.StackTrace}");
-	// 	}
-	// 	TaskScheduler.UnobservedTaskException += (o, e) => HandleTaskException(o);
-	// }
+	private static ATTime currentTime = new ATTime(0, 0, 0, 0);
+	public static ATTime CurrentTime { get => currentTime; private set => currentTime = value; }
+
+	public static int TimeScale { get; set; }
 
 	public static int currentPlayerID = 2;
 	public static string CurrentPlayerTag {
@@ -21,18 +32,24 @@ public class GameController : Node2D {
 		}
 	}
 
-	public void SetTaskbar(bool toggle) {
-		taskbar.SetVisible(toggle);
+
+	public void SetUI(bool toggle) {
+		UI.Visible = toggle;
 	}
 
 	[Export]
 	public NodePath _taskbar;
 	public Control taskbar;
 
+
+	[Export]
+	public NodePath _UI;
+	public Control UI;
+
+
 	public static string[] playerCompanyNames = { "Sunshine Airways", "Falcon Lines", "Phönix Travel", "Honey Airlines" };
 	public static string[] playerNames = { "Tina Cortez", "Siggi Sorglos", "Igor Tuppolevsky", "Mario Zucchero" };
 
-	public static Action onUnhandledInput;
 	public static bool canPlayerInteract = true;
 
 	public static Random r = new Random();
@@ -42,9 +59,12 @@ public class GameController : Node2D {
 	public override void _Ready() {
 		instance = this;
 		taskbar = GetNode<Control>(_taskbar);
+		UI = GetNode<Control>(_UI);
 
 		RoomManager.ChangeRoom("RoomMainMenu", isAirport: false);
 		GetTree().Connect("screen_resized", this, "OnScreenSizeChanged");
+
+		EventManager.ScheduleEvent(new Event() { name = "Test Event", onQueue = () => { GD.Print("Queue!"); }, onEventStart = () => { GD.Print("EVENT!"); } }, new ATTime(0, 0, 0, 20, 0));
 	}
 
 	public override void _UnhandledInput(InputEvent @event) {
@@ -67,11 +87,34 @@ public class GameController : Node2D {
 	}
 
 	override public void _Process(float delta) {
-		TimeScale = fastForward ? 20:1;
+		TimeScale = fastForward ? 20 : 1;
 
+		float elapsedTicks = 30 * TimeScale * delta; //1 * delta = 1 tick per second
+
+		if (CurrentGameMode == GameMode.InGame) {
+			CurrentTime.Tick(elapsedTicks);
+			Tick();
+		}
 	}
 
-	public static int TimeScale { get; set; }
+	public void Tick() {
+		EventManager.HandleTick();
+	}
+
+	public void SetGameMode(GameMode mode) {
+		CurrentGameMode = mode;
+		onGameModeChanged?.Invoke(mode);
+
+		switch (mode) {
+			case (GameMode.InGame):
+				SetUI(true);
+				break;
+			case (GameMode.Loading):
+			case (GameMode.MainMenu):
+				SetUI(false);
+				break;
+		}
+	}
 
 	public void OnScreenSizeChanged() {
 		//GetViewport().SetSizeOverride(true, new Vector2(OS.GetWindowSize().x, GetViewportRect().Size.y));
@@ -87,4 +130,10 @@ public class GameController : Node2D {
 
 		// viewport.SetAttachToScreenRect(new Rect2(diffHalf, viewport.Size * scale));
 	}
+}
+
+public enum GameMode {
+	InGame,
+	Loading,
+	MainMenu,
 }

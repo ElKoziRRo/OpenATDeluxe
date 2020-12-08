@@ -5,7 +5,7 @@ using File = System.IO.File;
 //TODO: Add pooling system to minimize GC
 
 public class SoundPlayer : AudioStreamPlayer {
-	public readonly static string SoundPath = GFXLibrary.pathToAirlineTycoonD;
+	public readonly static string SoundPath = SettingsManager.ATDGamePath;
 
 	public Action OnSoundFinished;
 
@@ -113,7 +113,6 @@ public class SoundPlayer : AudioStreamPlayer {
 		|| shortData[pos + 620] > audioThreshold
 		|| shortData[pos + 700] > audioThreshold
 		|| shortData[pos + 800] > audioThreshold
-		|| shortData[pos + 900] > audioThreshold
-		|| shortData[pos + 999] > audioThreshold;
+		|| shortData[pos + 900] > audioThreshold;
 	}
 }

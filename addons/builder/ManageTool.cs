@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Diagnostics;
 
+#if TOOLS
 [Tool]
 public class ManageTool : EditorPlugin {
 	static ManageTool instance;
@@ -33,3 +34,4 @@ public class ManageTool : EditorPlugin {
 	}
 }
 
+#endif

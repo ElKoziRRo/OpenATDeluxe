@@ -10,6 +10,7 @@ class TelephoneList : ListElement {
 			if (RoomManager.currentRoom != "RoomOffice")
 				onClick += DialogueSystem.StartPreparedTelephoneCall;
 
+			visible = true;
 			if (RoomManager.WasRoomVisited(room)) {
 				visible = true;
 			}
@@ -22,7 +23,7 @@ class TelephoneList : ListElement {
 			new ListItem[] {
 				new TelephoneListItem("Filo>2001", "RoomBank", "loanDialogue"),
 				new TelephoneListItem("Filo>2002", "RoomBank", "stocksDialogue"),
-				
+
 				new TelephoneListItem("Filo>2003", "RoomManager", "managerDialogue"),
 			});
 	}

@@ -37,6 +37,7 @@ public class PlayerDialogueWindow : DialogueWindow {
 		telephoneTalking[1] = (Texture)GD.Load($"res://Images/gli/glberatr/BER9{GameController.currentPlayerID}_07.res");
 		telephoneTalking[2] = (Texture)GD.Load($"res://Images/gli/glberatr/BER9{GameController.currentPlayerID}_08.res");
 
+
 		DialogueSystem.onDialogueStart += () => {
 			//icon.Position = basePosition;
 			//icon.Position += movePosition;
@@ -44,13 +45,17 @@ public class PlayerDialogueWindow : DialogueWindow {
 	}
 
 	override public void OnStartTalking() {
-		if(RoomManager.currentRoom == "RoomOffice")
+		if (RoomManager.currentRoom == "RoomOffice")
 			return;
-		
+
 		if (DialogueSystem.currentlyTalking == GameController.CurrentPlayerTag) {
 			isTalking = true;
 			startTime = OS.GetTicksMsec() + mouthIntervall;
 		}
+	}
+
+	protected override void PositionHead() {
+		//base.PositionHead();
 	}
 
 	override public void OnStopTalking() {
@@ -72,7 +77,7 @@ public class PlayerDialogueWindow : DialogueWindow {
 		}
 
 		if (icon.Position.DistanceTo(goal) > 20) {
-			icon.Position = icon.Position.LinearInterpolate(goal, delta * 4).Round();
+			icon.Position = icon.Position.LinearInterpolate(goal, delta * 4);
 			icon.ZIndex = -1;
 		} else {
 			icon.ZIndex = 0;

@@ -44,18 +44,18 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = 980.0
+margin_left = 989.0
 margin_top = 550.0
-margin_right = 980.0
+margin_right = 989.0
 margin_bottom = 550.0
-rect_scale = Vector2( 2.5, 2.5 )
+rect_scale = Vector2( 3.03, 2.5 )
 mouse_filter = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="roomSprite" type="Sprite" parent="Base"]
-position = Vector2( -75.529, -2.43213 )
+position = Vector2( -9.57264, -1.99773 )
 scale = Vector2( 0.990909, 0.990909 )
 texture = ExtResource( 3 )
 
@@ -70,9 +70,9 @@ position = Vector2( -4.56502, -9.05706 )
 shape = SubResource( 1 )
 
 [node name="Screen" type="AnimatedSprite" parent="Base"]
-position = Vector2( -194.358, -7.53902 )
+position = Vector2( -128.748, -6.77356 )
 frames = SubResource( 2 )
-frame = 2
+frame = 4
 speed_scale = 0.15
 playing = true
 
@@ -84,36 +84,19 @@ z_index = 16
 frames = SubResource( 3 )
 
 [node name="BA" parent="." instance=ExtResource( 14 )]
-margin_left = 140.0
+margin_left = 357.0
 margin_top = 340.0
-margin_right = 1480.0
+margin_right = 1697.0
 margin_bottom = 403.0
-mouse_filter = 2
 
-[node name="LeftSide" parent="BA/SpeechbubbleFlexible" index="0"]
-margin_right = 670.0
-margin_bottom = 63.0
+[node name="SpeechbubbleFlexible" parent="BA" index="0"]
+margin_right = 1341.0
+margin_bottom = 64.0
 
-[node name="Texture" parent="BA/SpeechbubbleFlexible/LeftSide" index="0"]
-margin_right = 704.0
-margin_bottom = 63.0
-
-[node name="RightSide" parent="BA/SpeechbubbleFlexible" index="1"]
-margin_left = 670.0
-margin_right = 1340.0
-margin_bottom = 63.0
-
-[node name="Flip" parent="BA/SpeechbubbleFlexible/RightSide" index="0"]
-margin_right = 670.0
-margin_bottom = 63.0
-
-[node name="Texture" parent="BA/SpeechbubbleFlexible/RightSide/Flip" index="0"]
-rect_pivot_offset = Vector2( 351.5, 31.5 )
-
-[node name="Head" parent="BA" index="2"]
-margin_left = 440.0
+[node name="Head" parent="BA" index="3"]
+margin_left = 455.588
 margin_top = 29.5792
-margin_right = 457.0
+margin_right = 472.588
 margin_bottom = 44.5792
 
 [node name="B2" parent="." instance=ExtResource( 14 )]
@@ -121,32 +104,15 @@ margin_left = 50.0
 margin_top = 300.0
 margin_right = 1510.0
 margin_bottom = 363.0
-mouse_filter = 2
 
-[node name="LeftSide" parent="B2/SpeechbubbleFlexible" index="0"]
-margin_right = 730.0
-margin_bottom = 63.0
+[node name="SpeechbubbleFlexible" parent="B2" index="0"]
+margin_right = 1461.0
+margin_bottom = 62.0
 
-[node name="Texture" parent="B2/SpeechbubbleFlexible/LeftSide" index="0"]
-margin_right = 764.0
-margin_bottom = 63.0
-
-[node name="RightSide" parent="B2/SpeechbubbleFlexible" index="1"]
-margin_left = 730.0
-margin_right = 1460.0
-margin_bottom = 63.0
-
-[node name="Flip" parent="B2/SpeechbubbleFlexible/RightSide" index="0"]
-margin_right = 730.0
-margin_bottom = 63.0
-
-[node name="Texture" parent="B2/SpeechbubbleFlexible/RightSide/Flip" index="0"]
-rect_pivot_offset = Vector2( 381.5, 31.5 )
-
-[node name="Head" parent="B2" index="2"]
-margin_left = -129.0
+[node name="Head" parent="B2" index="3"]
+margin_left = 52.7271
 margin_top = 30.5
-margin_right = -112.0
+margin_right = 69.7271
 margin_bottom = 45.5
 
 [editable path="Base/MouseColliderRoom2"]

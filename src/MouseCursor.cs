@@ -55,6 +55,14 @@ public class MouseCursor : Node2D {
 		//     SetTexture (lib.files[0].GetTexture());
 		// }
 		Input.SetMouseMode(Input.MouseMode.Hidden);
+
+		GameController.onUnhandledInput += () => {
+			if (PlayerCharacter.instance != null && RoomManager.currentRoom == "RoomAirport" && movingCamera == 0) {
+				//SET MOVING WAYPOINT
+				PlayerCharacter.instance.SetPath(CameraController.airportCamera.GetGlobalMousePosition());
+				//handled = true;
+			}
+		};
 	}
 
 	public void MouseEnter(Node other) {
@@ -187,11 +195,10 @@ public class MouseCursor : Node2D {
 					}
 					currentHover.item.Call("OnClick");
 					handled = true;
-				} else if (PlayerCharacter.instance != null && RoomManager.currentRoom == "RoomAirport" && movingCamera == 0) {
-					//SET MOVING WAYPOINT
-					PlayerCharacter.instance.SetPath(CameraController.airportCamera.GetGlobalMousePosition());
-					handled = true;
-				}
+				}// else if (PlayerCharacter.instance != null && RoomManager.currentRoom == "RoomAirport" && movingCamera == 0) {
+				 // 	//SET MOVING WAYPOINT
+				 // 	//handled = true;
+				 // }
 
 				if (handled)
 					GetTree().SetInputAsHandled();

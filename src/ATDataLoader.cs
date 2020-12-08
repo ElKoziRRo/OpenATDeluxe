@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 public class ATDataLoader {
 
 	static List<GFXLibrary> libraries = new List<GFXLibrary>();
-	static List<Resource> resources = new List<Resource>();
+	public static List<Resource> resources = new List<Resource>();
 
 	public static void LoadCSVData() {
 		string dataFolder = ATFile.FindFolder("data") + "/";
@@ -52,7 +52,6 @@ public class ATDataLoader {
 				var lib = new GFXLibrary(folderName + "/" + System.IO.Path.GetFileName(f));
 				lib.GetFilesInLibrary();
 				libraries.Add(lib);
-
 				//}
 			});
 		}

@@ -10,7 +10,7 @@ public class DialogueWindow : Control {
 	public VBoxContainer lineContainer;
 	public MarginContainer container;
 
-	public HBoxContainer speechbubble;
+	public NinePatchRect speechbubble;
 	public NinePatchRect rightTexture;
 
 	public PackedScene linePrefab;
@@ -25,15 +25,17 @@ public class DialogueWindow : Control {
 
 	public Vector2 HeadPosition { get => headPosition; set => headPosition = value; }
 
+	public Vector2 GlobalOffset, HeadOffset;
+
 	public override void _Ready() {
 		//textLabel = GetNode<Label>("Label");
 		lineContainer = GetNode<VBoxContainer>("Content");
 
 		// container = GetNode<MarginContainer>("Margin");
-		lineContainer.Connect("resized", this, "OnContainerSizeChange");
+		lineContainer.Connect("resized", this, nameof(OnContainerSizeChange));
 
-		speechbubble = GetNode<HBoxContainer>("SpeechbubbleFlexible");
-		rightTexture = GetNode<NinePatchRect>("SpeechbubbleFlexible/RightSide/Flip/Texture");
+		speechbubble = GetNode<NinePatchRect>("SpeechbubbleFlexible");
+		//rightTexture = GetNode<NinePatchRect>("SpeechbubbleFlexible/RightSide/Flip/Texture");
 		head = GetNodeOrNull<TextureRect>("Head");
 
 		linePrefab = (PackedScene)ResourceLoader.Load(speechbubbleLinePrefab);
@@ -51,14 +53,14 @@ public class DialogueWindow : Control {
 	}
 
 	public void OnContainerSizeChange() {
-		Vector2 innerMargin = new Vector2(50, 10);
+		Vector2 innerMargin = new Vector2(75, 20);
 		//Add padding:
 		speechbubble.RectPosition = lineContainer.RectPosition - innerMargin / 2;
-		speechbubble.RectSize = lineContainer.RectSize + innerMargin;
+		speechbubble.RectSize = lineContainer.RectSize * 2 + innerMargin * 2;
 
 		//Move to the right position, with the new margin in mind
 		RectSize = baseSize - innerMargin;
-		RectPosition = basePosition + innerMargin / 2;
+		RectPosition = basePosition + innerMargin / 2 + GlobalOffset;
 
 		//Move the Speechbubble down a bit when the box is bigger than normal 
 		//to mimic the original behavior for longer player text.
@@ -70,29 +72,18 @@ public class DialogueWindow : Control {
 			RectPosition = RectPosition + new Vector2(0, heightDifference) / 2;
 		}
 
-		head?.SetGlobalPosition(HeadPosition);
+		PositionHead();
 
 		//Force redraw and repositioning
 		speechbubble.Hide();
 		speechbubble.Show();
 	}
 
-	// public Control AddLines(int numberOfLines, int option) {
-	// 	OptionLine newLine = new OptionLine();
-	// 	newLine.Name = "Line";
-	// 	newLine.MouseFilter = MouseFilterEnum.Pass;
-
-	// 	newLine.option = option;
-
-	// 	//int lineHeight = textLabel.GetLineHeight() + 3; //Godot's Label have line spacing of 3 apparently
-	// 	newLine.RectMinSize = new Vector2(0, lineHeight * numberOfLines);
-
-	// 	lineContainer.AddChild(newLine);
-	// 	lines.Add(newLine);
-
-
-	// 	return newLine;
-	// }
+	protected virtual void PositionHead() {
+		Vector2 headPos = HeadPosition;
+		headPos.y = speechbubble.RectGlobalPosition.y + speechbubble.RectSize.y / 2 - 3;
+		head?.SetGlobalPosition(headPos + HeadOffset);
+	}
 
 	public static string FillWildcards(string fullText, params string[] values) {
 		var aStringBuilder = new StringBuilder(fullText);

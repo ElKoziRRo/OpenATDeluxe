@@ -15,7 +15,7 @@ public struct MainMenu : IBaseMenu {
 					"# "+Tr("NewG>501"), // # Free Game
 					MenuItem.EntryType.Link) {OnClick = ()=>{
 						RoomManager.ChangeRoom("", true);
-						GameController.instance.SetTaskbar(true);}},
+						 GameController.instance.SetGameMode(GameMode.InGame);}},
 				new MenuItem(
 					Tr("NewG>515"),//Campaigns
 					MenuItem.EntryType.LinkBlocked),

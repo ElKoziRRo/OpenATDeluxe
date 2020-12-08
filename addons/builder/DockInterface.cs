@@ -11,6 +11,7 @@ using File = System.IO.File;
 using Path = System.IO.Path;
 using Thread = System.Threading.Thread;
 
+#if TOOLS
 [Tool]
 public class DockInterface : Control {
 	public bool isDocked;
@@ -108,12 +109,17 @@ public class DockInterface : Control {
 			importButton.Disabled = false;
 			brokenPath.Hide();
 			path = text;
-			SettingsManager.SetSetting(ATDPathConfig, text);
+			SettingsManager.ATDGamePath = text;
 		}
 	}
 
 	public void ImportImages() {
 		if (importButton == null)
+			return;
+
+		EnterText(gamePath.Text);
+
+		if (!ATDGameLoader.IsOriginalGamePath(gamePath.Text))
 			return;
 
 		tokenS = new CancellationTokenSource();
@@ -133,6 +139,10 @@ public class DockInterface : Control {
 			ATDataLoader.LoadImageData();
 			ATDataLoader.CreateImageResources();
 			ATDataLoader.SaveAllLoadedResources();
+
+			foreach (var texture in ATDataLoader.resources) {
+				texture?.Free();
+			}
 		} catch (AggregateException e) {
 			GD.Print("FATAL ERROR!");
 			GD.Print(e.Message);
@@ -146,7 +156,7 @@ public class DockInterface : Control {
 	}
 
 	private void ResetButtonPressed() {
-		ManageTool.Reload(this);
+		//ManageTool.Reload(this);
 		GD.Print("RESET!");
 	}
 
@@ -206,3 +216,5 @@ public class DockInterface : Control {
 	}
 
 }
+
+#endif

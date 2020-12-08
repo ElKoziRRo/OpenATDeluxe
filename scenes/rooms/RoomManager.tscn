@@ -40,24 +40,10 @@ margin_top = 170.316
 margin_right = 1779.17
 margin_bottom = 220.316
 
-[node name="LeftSide" parent="BO/SpeechbubbleFlexible" index="0"]
-margin_right = 659.0
-
-[node name="Texture" parent="BO/SpeechbubbleFlexible/LeftSide" index="0"]
-margin_right = 693.0
-
-[node name="RightSide" parent="BO/SpeechbubbleFlexible" index="1"]
-margin_left = 659.0
-margin_right = 1319.0
-
-[node name="Flip" parent="BO/SpeechbubbleFlexible/RightSide" index="0"]
-margin_right = 660.0
-
-[node name="Texture" parent="BO/SpeechbubbleFlexible/RightSide/Flip" index="0"]
-rect_pivot_offset = Vector2( 346.5, 25 )
-
-[node name="Head" parent="BO" index="2"]
+[node name="Head" parent="BO" index="3"]
 margin_left = 179.298
+margin_top = 23.1282
 margin_right = 196.298
+margin_bottom = 38.1282
 
 [editable path="BO"]

@@ -12,6 +12,8 @@ public class SmkAnimation : SmkPlayer {
 	public static SmkAnimation CreateAnimation(Node parent, string name, Vector2 position = default(Vector2), AnimationGoal goal = default(AnimationGoal), SoundPlayer audio = null, string folder = "/video/") {
 		SmkAnimation smkAnimation = new SmkAnimation();
 
+		smkAnimation.Name = folder + name;
+
 		smkAnimation.fileName = folder + name;
 		smkAnimation.Position = position;
 		smkAnimation.audio = audio;

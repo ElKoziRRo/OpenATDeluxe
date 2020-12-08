@@ -7,7 +7,7 @@ public class Manager : BaseRoom {
 	AnimationList manager = new AnimationList();
 
 	public override void OnReady() {
-		DialogueSystem.AddActor(new Actor("BO", (DialogueWindow)FindNode("BO")));
+		DialogueSystem.AddActor(new Actor("BO", (DialogueWindow)FindNode("BO"), new Vector2(0, 100), new Vector2(0, 100)));
 
 		manager.basePosition = new Vector2(24, -136);
 		manager.CreateMouseArea(baseNode);

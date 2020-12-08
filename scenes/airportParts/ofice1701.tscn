@@ -30,7 +30,7 @@
 [ext_resource path="res://Images/gli/glbrick/KAMERA1.res" type="Texture" id=28]
 [ext_resource path="res://Images/gli/glbrick/OFF_TW.res" type="Texture" id=29]
 [ext_resource path="res://Images/gli/glbrick/FARBRICH.res" type="Texture" id=30]
-[ext_resource path="res://src/Staircase.cs" type="Script" id=31]
+[ext_resource path="res://src/Gameplay/WorldObjects/Staircase.cs" type="Script" id=31]
 [ext_resource path="res://Images/gli/glbrick/TREPPE4.res" type="Texture" id=32]
 [ext_resource path="res://Images/gli/glbrick/LOGBBUR.res" type="Texture" id=33]
 [ext_resource path="res://Images/gli/glbrick/DECO04.res" type="Texture" id=34]
@@ -201,7 +201,8 @@ centered = false
 
 [node name="TREPPE2 15" type="Sprite" parent="."]
 use_parent_material = true
-position = Vector2( 1870, 190 )
+position = Vector2( 1865.56, 190 )
+scale = Vector2( 1.11103, 1 )
 z_index = 18
 texture = ExtResource( 6 )
 centered = false
@@ -425,7 +426,8 @@ centered = false
 
 [node name="TREPPE1 47" type="Sprite" parent="."]
 use_parent_material = true
-position = Vector2( 1870, 65 )
+position = Vector2( 1869, 65 )
+scale = Vector2( 1.00781, 1 )
 z_index = 20
 texture = ExtResource( 22 )
 centered = false
@@ -2223,6 +2225,7 @@ centered = false
 [node name="TREPPE2 299" type="Sprite" parent="."]
 use_parent_material = true
 position = Vector2( 859, 161.662 )
+scale = Vector2( 1.03825, 1 )
 z_index = 19
 texture = ExtResource( 6 )
 centered = false
@@ -2586,7 +2589,8 @@ centered = false
 
 [node name="TREPPE1 351" type="Sprite" parent="."]
 use_parent_material = true
-position = Vector2( 859, 65 )
+position = Vector2( 858.29, 65 )
+scale = Vector2( 1.03992, 1 )
 z_index = 59
 texture = ExtResource( 22 )
 centered = false

@@ -99,7 +99,7 @@ public class DialogueSystem : Node2D {
 			if (replaceExisting) {
 				actors[actor.name] = actor;
 				return;
-			}else {
+			} else {
 				GD.Print($"{actor.name} is already added! Use \"OverriderActor(...)\" to replace it instead!");
 				return;
 			}
@@ -112,7 +112,7 @@ public class DialogueSystem : Node2D {
 			actors[newActor.name] = newActor;
 			return;
 		}
-		
+
 		AddActor(newActor);
 	}
 
@@ -199,16 +199,17 @@ public class DialogueSystem : Node2D {
 		isTelephoneCall = true;
 		PrepareDialogue(registeredDialogues[dialogueName]);
 
-		Vector2 pushForCorrectPosition = Vector2.Right * GetCurrentActor().horizontalPushForCall;
+		//Vector2 pushForCorrectPosition = Vector2.Right * GetCurrentActor().horizontalPushForCall;
 		DialogueWindow dialogueWindow = GetCurrentActorSpeechbubble();
 
-		dialogueWindow.HeadPosition += pushForCorrectPosition;
+		dialogueWindow.HeadOffset = GetCurrentActor().callHeadOffset;
+		dialogueWindow.GlobalOffset = GetCurrentActor().callBubbleOffset;
 		if (dialogueWindow.GetParent() != instance) {
 			dialogueWindow.GetParent().RemoveChild(dialogueWindow);
 			instance.AddChild(dialogueWindow);
 		}
 
-		newRoom.Position = pushForCorrectPosition;
+		newRoom.Position = GetCurrentActor().callRoomOffset;
 		otherRoomHolder.Hide();
 	}
 
@@ -497,10 +498,10 @@ public class DialogueSystem : Node2D {
 		dialogueCommandQueue.Enqueue(
 			() => CreateSoundsAndExecuteOnFinish(instructions, currentFullText, () => {
 				currentDialogue.CurrentNode.OnSpeechFinished();
-				
-				if(currentDialogue?.CurrentNode == null)
+
+				if (currentDialogue?.CurrentNode == null)
 					return; //We could stop the current dialogue as a side effect from the OnSpeechFinish(), that's why we leave
-				
+
 				if (currentDialogue.CurrentNode.HasFollowup()) {
 					state = DialogueStates.ReadingHead;
 					currentDialogue.CurrentNode.GoToFollowup();
@@ -568,7 +569,7 @@ public class DialogueSystem : Node2D {
 
 	public static void StopDialogue() {
 		Speechbubble?.Hide();
-		
+
 		currentDialogue = null;
 		currentlyTalking = "";
 		InteractionLayerManager.EnableAllLayers();
@@ -604,12 +605,16 @@ public class DialogueSystem : Node2D {
 public struct Actor {
 	public string name;
 	public DialogueWindow speechbubble;
-	public float horizontalPushForCall;
+	public Vector2 callRoomOffset;
+	public Vector2 callBubbleOffset;
+	public Vector2 callHeadOffset;
 
-	public Actor(string name, DialogueWindow speechbubble, float horizontalPushForCall = 0) {
+	public Actor(string name, DialogueWindow speechbubble, Vector2? callRoomOffset = null, Vector2? callBubbleOffset = null, Vector2? callHeadOffset = null) {
 		this.name = name;
 		this.speechbubble = speechbubble;
-		this.horizontalPushForCall = horizontalPushForCall;
+		this.callRoomOffset = callRoomOffset ?? Vector2.Zero;
+		this.callBubbleOffset = callBubbleOffset ?? Vector2.Zero;
+		this.callHeadOffset = callHeadOffset ?? Vector2.Zero;
 	}
 }
 

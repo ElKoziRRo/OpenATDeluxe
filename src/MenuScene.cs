@@ -16,11 +16,14 @@ public class MenuScene : Node2D {
 	public AudioStreamPlayer klackerPlayer;
 	public static bool klackersEnabled = true;
 
+	[Export]
+	public Material textMaterial;
+
 	const int CharA = 'A';
 	const int CharZ = 'Z';
 	public const int MaxTextLength = 24;
 	public const string TextImagesPath = "res://Images/room/klacker/";
-	public readonly static string SoundPath = GFXLibrary.pathToAirlineTycoonD + "/SOUND/";
+	public readonly static string SoundPath = SettingsManager.ATDGamePath + "/SOUND/";
 	public const string FilePrefixNormal = "KL_", FilePrefixDark = "KD_";
 
 	public Dictionary<char, string> exceptions = new Dictionary<char, string>();
@@ -40,7 +43,7 @@ public class MenuScene : Node2D {
 		textGrid = GetNode<GridContainer>(_textGrid);
 		klackerPlayer = GetNode<AudioStreamPlayer>(_klackerPlayer);
 
-		GameController.instance?.SetTaskbar(false);
+		GameController.instance.SetGameMode(GameMode.MainMenu);
 
 		PopulateGrid();
 		PopulateExceptions();
@@ -262,6 +265,7 @@ public class MenuScene : Node2D {
 		s.Name = character;
 		s.Centered = false;
 		s.Texture = (Texture)ResourceLoader.Load(GetFilePath(character, item.TypeFace));
+		s.Material = textMaterial;
 		return s;
 	}
 
@@ -270,7 +274,7 @@ public class MenuScene : Node2D {
 	}
 
 	override public void _ExitTree() {
-		GameController.instance.SetTaskbar(true);
+		//GameController.instance.SetTaskbar(true);
 	}
 }
 

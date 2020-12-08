@@ -3,17 +3,9 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using System.Text;
 using Godot;
+using System.Linq;
 
 public class GFXLibrary {
-
-	public static string pathToAirlineTycoonD = "P:/Projekte/Major Games/BASE/ATD";//@"..\BASE\ATD";
-
-	[Export]
-	public string _pathToAirlineTycoonD {
-		set { pathToAirlineTycoonD = value; }
-		get { return pathToAirlineTycoonD; }
-	}
-
 	public class GFXFile {
 		public GFXFile(GFXLibrary parentLib) {
 			parent = parentLib;
@@ -84,13 +76,16 @@ public class GFXLibrary {
 	public const int FileHeaderSize = 17; //Bytes - Size of an individual File Header
 
 
+	public int maxWidthSingleImage = 0, maxHeightSingleImage = 0;
+	public int totalHeight = 0;
+
+	public int rows = 1;
+
 	public GFXLibrary(string _pathToGFXFile) //Load a gl***.gli file from the GLI folder in ATD - specify the full path to the file (relative or absolute)!
 	{
 		pathToGFXFile = _pathToGFXFile;
 		name = System.IO.Path.GetFileNameWithoutExtension(pathToGFXFile);
 	}
-
-
 
 	public void GetFilesInLibrary() {
 		Open();
@@ -135,6 +130,9 @@ public class GFXLibrary {
 
 		int width = (int)handle.Get32(); //Get image width in pixel
 		int height = (int)handle.Get32(); //Get image height in pixel
+
+		maxWidthSingleImage = maxWidthSingleImage < width ? width : maxWidthSingleImage;
+		totalHeight += height;
 
 		byte[] colors = new byte[fileSize / 2 * 4];
 

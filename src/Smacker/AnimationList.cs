@@ -180,7 +180,7 @@ public class AnimationGoalIdle : AnimationGoal {
 	private int randomInterval;
 	private int maxTimeBetweenIntervals = 10; //in seconds
 	private int minTimeBetweenIntervals = 2; //in seconds
-	
+
 	private bool IdleAnimHelper(AnimationGoal goal, string actor, int dialogueStartId, int[] idleAnimationsIds) {
 		if (DialogueSystem.IsDialogueActive && (DialogueSystem.actorA == actor || DialogueSystem.actorB == actor)) {
 			goal.triggerID = dialogueStartId;
@@ -190,8 +190,8 @@ public class AnimationGoalIdle : AnimationGoal {
 		if (idleAnimationsIds?.Length != 0 && randomInterval <= OS.GetTicksMsec()) {
 			goal.triggerID = idleAnimationsIds[GameController.r.Next(0, idleAnimationsIds.Length)];
 
-			randomInterval = (int)OS.GetTicksMsec() + 1000 * (int)(GameController.r.NextDouble() * maxTimeBetweenIntervals)+minTimeBetweenIntervals;
-			
+			randomInterval = (int)OS.GetTicksMsec() + 1000 * (int)(GameController.r.NextDouble() * maxTimeBetweenIntervals) + minTimeBetweenIntervals;
+
 			return true;
 		}
 
@@ -217,6 +217,7 @@ public class AnimationGoalTalking : AnimationGoal {
 		}
 		if (DialogueSystem.currentSound?.IsTalking() == false) {
 			goal.triggerID = noTalkingID;
+			GD.Print("Change to NO TALKING");
 			return true;
 		}
 		if (DialogueSystem.IsDialogueActive == false) {
@@ -243,14 +244,17 @@ public class AnimationGoalListening : AnimationGoal {
 	private static bool WhileListeningAnimHelper(AnimationGoal goal, Dialogue listeningDialogue, string actor, int startTalkingID, int dialogueStoppedID) {
 		if (DialogueSystem.IsDialogueActive == false) {
 			goal.triggerID = dialogueStoppedID;
+			GD.Print("Change to TALKING");
 			return true;
 		}
-		
-		if (DialogueSystem.currentlyTalking == actor) {
+
+		if (DialogueSystem.currentSound?.IsTalking() == true && DialogueSystem.currentlyTalking == actor) {
 			goal.triggerID = startTalkingID;
-			return DialogueSystem.currentSound?.IsTalking() == true;
+
+			GD.Print("Change to TALKING");
+			return true;
 		}
-		
+
 		return false;
 	}
 }
@@ -263,12 +267,12 @@ public class AnimationGoalDialogueStart : AnimationGoal {
 			if (DialogueSystem.isTelephoneCall && startTelephone) {
 				DialogueSystem.StartPreparedTelephoneCall();
 				return;
-			}else if(DialogueSystem.isTelephoneCall && startTelephone == false) {
+			} else if (DialogueSystem.isTelephoneCall && startTelephone == false) {
 				return;
 			}
-			
+
 			DialogueSystem.StartCurrentDialogue();
-				
+
 			//throw new NullReferenceException("Trying to use a dialogue start Animation goal, without properly preparing the dialogue system! Please use DialogueSystem.PrepareDialogue(...) to prepare!");
 		}
 
