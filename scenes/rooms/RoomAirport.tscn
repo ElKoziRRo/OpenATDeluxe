@@ -12,7 +12,6 @@
 [ext_resource path="res://Images/gli/glbrick/FRACHT04.res" type="Texture" id=10]
 [ext_resource path="res://Images/gli/glbrick/FRACHT01.res" type="Texture" id=11]
 [ext_resource path="res://Images/gli/glbrick/FRACHT02.res" type="Texture" id=12]
-[ext_resource path="res://Images/gli/glbrick/WA03.res" type="Texture" id=13]
 [ext_resource path="res://scenes/airportParts/ofice1701.tscn" type="PackedScene" id=14]
 [ext_resource path="res://scenes/airportParts/entry4101.tscn" type="PackedScene" id=15]
 [ext_resource path="res://scenes/airportParts/shops101.tscn" type="PackedScene" id=16]
@@ -25,6 +24,11 @@
 [ext_resource path="res://src/MouseAreaRoom.cs" type="Script" id=23]
 [ext_resource path="res://src/Characters/PlayerCharacter.cs" type="Script" id=24]
 
+[sub_resource type="NavigationPolygon" id=13]
+vertices = PoolVector2Array( 426.802, 945.588, 396.807, 995.592, 404.877, 971.244, 405.919, 958.482, 279.337, 893.628, 236.447, 896.323, 240.268, 888.158, 280.639, 887.637 )
+polygons = [ PoolIntArray( 0, 1, 2 ), PoolIntArray( 3, 0, 2 ), PoolIntArray( 4, 5, 6, 7 ), PoolIntArray( 3, 2, 4, 7 ) ]
+outlines = [ PoolVector2Array( 426.802, 945.588, 396.807, 995.592, 404.877, 971.244, 279.337, 893.628, 236.447, 896.323, 240.268, 888.158, 280.639, 887.637, 405.919, 958.482 ) ]
+
 [sub_resource type="RectangleShape2D" id=1]
 resource_local_to_scene = true
 extents = Vector2( 88.6572, 118.233 )
@@ -35,8 +39,8 @@ extents = Vector2( 130.82, 109.005 )
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 133.289, 117.572 )
 
-[sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 78.6217, 109.804 )
+[sub_resource type="RectangleShape2D" id=14]
+extents = Vector2( 21.1824, 91.4185 )
 
 [sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 266.41, 124.383 )
@@ -70,6 +74,7 @@ _roomEntrances = [ NodePath("Interactables/Marketing/MouseColliderRoom") ]
 position = Vector2( 4447.56, 335.176 )
 z_index = 999
 z_as_relative = false
+offset = Vector2( 0, -10 )
 current = true
 limit_left = 0
 limit_top = 0
@@ -352,7 +357,7 @@ texture = ExtResource( 8 )
 
 [node name="LeftWall" type="Node2D" parent="Navigation2D/Base"]
 material = ExtResource( 4 )
-position = Vector2( 14.8861, -60.3373 )
+position = Vector2( 11.3861, -60.3373 )
 __meta__ = {
 "_edit_lock_": true
 }
@@ -362,7 +367,7 @@ material = ExtResource( 4 )
 
 [node name="FLOOR_Z6" type="Sprite" parent="Navigation2D/Base/LeftWall/Floor"]
 use_parent_material = true
-position = Vector2( 402.237, 938.986 )
+position = Vector2( 431.578, 953.037 )
 scale = Vector2( 1, -1 )
 texture = ExtResource( 9 )
 
@@ -387,8 +392,9 @@ texture = ExtResource( 9 )
 
 [node name="FLOOR_Z8" type="Sprite" parent="Navigation2D/Base/LeftWall/Floor"]
 use_parent_material = true
-position = Vector2( 354.737, 938.986 )
+position = Vector2( 354.65, 954.277 )
 scale = Vector2( 1, -1 )
+z_index = 11
 texture = ExtResource( 9 )
 
 [node name="FLOOR_Z11" type="Sprite" parent="Navigation2D/Base/LeftWall/Floor"]
@@ -418,7 +424,9 @@ texture = ExtResource( 9 )
 
 [node name="FLOOR_Z12" type="Sprite" parent="Navigation2D/Base/LeftWall/Floor"]
 use_parent_material = true
-position = Vector2( 384.513, 953.639 )
+position = Vector2( 391.716, 960.903 )
+scale = Vector2( 0.54438, 1.15127 )
+z_index = 11
 texture = ExtResource( 9 )
 
 [node name="FLOOR_Z3" type="Sprite" parent="Navigation2D/Base/LeftWall/Floor"]
@@ -435,13 +443,13 @@ texture = ExtResource( 9 )
 
 [node name="FLOOR_Z2" type="Sprite" parent="Navigation2D/Base/LeftWall/Floor"]
 use_parent_material = true
-position = Vector2( 354.737, 854.986 )
+position = Vector2( 354.737, 853.486 )
 z_index = -2
 texture = ExtResource( 9 )
 
 [node name="FLOOR_Z16" type="Sprite" parent="Navigation2D/Base/LeftWall/Floor"]
 use_parent_material = true
-position = Vector2( 355.329, 1021.87 )
+position = Vector2( 356.829, 1021.87 )
 z_index = -2
 texture = ExtResource( 9 )
 
@@ -459,27 +467,29 @@ texture = ExtResource( 9 )
 
 [node name="FRACHT04" type="Sprite" parent="Navigation2D/Base/LeftWall"]
 use_parent_material = true
-position = Vector2( 350.518, 1009.47 )
+position = Vector2( 346.018, 1018.97 )
+z_index = 11
 texture = ExtResource( 10 )
 
 [node name="FRACHT01" type="Sprite" parent="Navigation2D/Base/LeftWall"]
 use_parent_material = true
-position = Vector2( 184.087, 899.301 )
+position = Vector2( 179.587, 908.801 )
 texture = ExtResource( 11 )
 
 [node name="FRACHT02" type="Sprite" parent="Navigation2D/Base/LeftWall"]
 use_parent_material = true
-position = Vector2( 294.419, 975.151 )
+position = Vector2( 291.419, 975.151 )
+z_index = 62
+z_as_relative = false
 texture = ExtResource( 12 )
 
-[node name="FENSTER5" type="Sprite" parent="Navigation2D/Base/LeftWall"]
-use_parent_material = true
-position = Vector2( 347.985, 925.587 )
-z_index = 2
-texture = ExtResource( 13 )
+[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Navigation2D/Base/LeftWall"]
+position = Vector2( -12.3861, 60.3373 )
+z_index = 11
+navpoly = SubResource( 13 )
 
 [node name="ofice1701" parent="Navigation2D/Base" instance=ExtResource( 14 )]
-position = Vector2( 186.305, 585.591 )
+position = Vector2( 185.805, 585.591 )
 
 [node name="entry4101" parent="Navigation2D/Base" instance=ExtResource( 15 )]
 position = Vector2( 1945.81, 585.591 )
@@ -575,9 +585,14 @@ position = Vector2( -0.36145, 2.38788 )
 script = ExtResource( 23 )
 roomSceneName = "RoomCargo"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Cargo/MouseCollider2"]
-position = Vector2( 0, -1.16632 )
-shape = SubResource( 4 )
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Interactables/Cargo/MouseCollider2"]
+visible = false
+position = Vector2( -66.2791, 16.587 )
+polygon = PoolVector2Array( 315.942, 408.522, -275.818, 409.59, -264.183, -424.123, -8.535, -430.041, 196.22, -350.743, 189.119, -78.5251, 190.302, -5.14465, 322.86, 45.7482 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Interactables/Cargo/MouseCollider2"]
+position = Vector2( 325.429, 158.332 )
+shape = SubResource( 14 )
 
 [node name="LastMinute" type="Node2D" parent="Interactables"]
 position = Vector2( 1529.95, 473.305 )

@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=48 format=2]
 
 [ext_resource path="res://materials/cutoutPreMult.tres" type="Material" id=1]
 [ext_resource path="res://Images/gli/glbrick/FENSTER2.res" type="Texture" id=2]
@@ -39,8 +39,22 @@
 [ext_resource path="res://Images/gli/glbrick/RAMPE5.res" type="Texture" id=37]
 [ext_resource path="res://Images/gli/glbrick/RAMPE6.res" type="Texture" id=38]
 [ext_resource path="res://Images/gli/glbrick/RAMPE4.res" type="Texture" id=39]
+[ext_resource path="res://Images/gli/glbrick/ROLLTR06.res" type="Texture" id=40]
+[ext_resource path="res://Images/gli/glbrick/ROLLTR04.res" type="Texture" id=41]
+[ext_resource path="res://Images/gli/glbrick/ROLLTR05.res" type="Texture" id=43]
+[ext_resource path="res://Images/gli/glbrick/ROLLTR02.res" type="Texture" id=44]
+[ext_resource path="res://Images/gli/glbrick/ROLLTR03.res" type="Texture" id=45]
+[ext_resource path="res://Images/gli/glbrick/ROLLTR07.res" type="Texture" id=46]
 
-[sub_resource type="NavigationPolygon" id=1]
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 8 ), ExtResource( 44 ), ExtResource( 45 ), ExtResource( 41 ), ExtResource( 43 ), ExtResource( 40 ), ExtResource( 46 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="NavigationPolygon" id=2]
 vertices = PoolVector2Array( 710, 320, 710, 410, 460, 410, 480, 380, 630, 320, 610, 290, 650, 290, 590, 320, 210, 220, 560, 220, 550, 240, 570, 240, 530, 320, 230, 380, 190, 260, 220, 410, 170, 410, 170, 260, 660, 130, 640, 130, 650, 110, 680, 100, 210, 100, 240, 110, 220, 150, 180, 140, 150, 150, 150, 140 )
 polygons = [ PoolIntArray( 0, 1, 2, 3, 4 ), PoolIntArray( 5, 6, 4, 7 ), PoolIntArray( 8, 9, 10 ), PoolIntArray( 10, 11, 12 ), PoolIntArray( 8, 10, 12, 3, 13, 14 ), PoolIntArray( 7, 4, 3 ), PoolIntArray( 12, 7, 3 ), PoolIntArray( 13, 15, 16, 17, 14 ), PoolIntArray( 18, 19, 20, 21 ), PoolIntArray( 22, 21, 20, 23 ), PoolIntArray( 22, 23, 24, 25 ), PoolIntArray( 25, 24, 26, 27 ) ]
 outlines = [ PoolVector2Array( 710, 410, 460, 410, 480, 380, 230, 380, 220, 410, 170, 410, 170, 260, 190, 260, 210, 220, 560, 220, 550, 240, 570, 240, 530, 320, 590, 320, 610, 290, 650, 290, 630, 320, 710, 320 ), PoolVector2Array( 660, 130, 680, 100, 210, 100, 180, 140, 150, 140, 150, 150, 220, 150, 240, 110, 650, 110, 640, 130 ) ]
@@ -307,13 +321,6 @@ z_index = 10
 texture = ExtResource( 6 )
 centered = false
 
-[node name="EINGANG4 38" type="Sprite" parent="."]
-use_parent_material = true
-position = Vector2( 278, 415 )
-z_index = 12
-texture = ExtResource( 7 )
-centered = false
-
 [node name="EINGANG4 39" type="Sprite" parent="."]
 use_parent_material = true
 position = Vector2( 367, 415 )
@@ -321,45 +328,159 @@ z_index = 12
 texture = ExtResource( 7 )
 centered = false
 
-[node name="ROLLTR01 40" type="Sprite" parent="."]
+[node name="EINGANG4 38" type="Sprite" parent="."]
 use_parent_material = true
-position = Vector2( 354, 425 )
-z_index = 19
-texture = ExtResource( 8 )
+position = Vector2( 277.757, 417 )
+scale = Vector2( 1.11126, 1 )
+z_index = 40
+texture = ExtResource( 7 )
 centered = false
 
-[node name="ROLLTR08 41" type="Sprite" parent="."]
+[node name="Node2D" type="Node2D" parent="."]
 use_parent_material = true
-position = Vector2( 265, 427 )
+position = Vector2( 298.475, 450.438 )
+scale = Vector2( 1.02, 0.981 )
+z_index = 10
+
+[node name="ColorRect" type="ColorRect" parent="Node2D"]
+margin_left = -34.9038
+margin_top = -24.2075
+margin_right = 28.0962
+margin_bottom = 15.7925
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ROLLTR" type="AnimatedSprite" parent="Node2D"]
+use_parent_material = true
+position = Vector2( -27.9904, -23.6789 )
+scale = Vector2( 1.211, 1 )
+z_index = 26
+frames = SubResource( 1 )
+frame = 3
+speed_scale = 2.0
+playing = true
+centered = false
+
+[node name="ROLLTR2" type="AnimatedSprite" parent="Node2D"]
+use_parent_material = true
+position = Vector2( -36.5058, -11.0643 )
+scale = Vector2( 1.211, 1 )
+z_index = 20
+frames = SubResource( 1 )
+frame = 1
+speed_scale = 2.0
+playing = true
+centered = false
+
+[node name="ROLLTR4" type="AnimatedSprite" parent="Node2D"]
+use_parent_material = true
+position = Vector2( -43.4994, 1.74951 )
+scale = Vector2( 1.211, 1 )
+z_index = 20
+frames = SubResource( 1 )
+frame = 7
+speed_scale = 2.0
+playing = true
+centered = false
+
+[node name="ROLLTR3" type="AnimatedSprite" parent="Node2D"]
+use_parent_material = true
+position = Vector2( -52.0127, 15.5965 )
+scale = Vector2( 1.211, 1 )
+z_index = 20
+frames = SubResource( 1 )
+frame = 6
+speed_scale = 2.0
+playing = true
+centered = false
+
+[node name="Node2D2" type="Node2D" parent="."]
+use_parent_material = true
+position = Vector2( 352.33, 427 )
+z_index = 22
+
+[node name="ColorRect" type="ColorRect" parent="Node2D2"]
+margin_right = 63.0
+margin_bottom = 40.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ROLLTR" type="AnimatedSprite" parent="Node2D2"]
+use_parent_material = true
+position = Vector2( 6.91339, 0.528595 )
+scale = Vector2( 1.211, 1 )
 z_index = 19
-texture = ExtResource( 9 )
+frames = SubResource( 1 )
+frame = 3
+speed_scale = 2.0
+playing = true
+centered = false
+
+[node name="ROLLTR2" type="AnimatedSprite" parent="Node2D2"]
+use_parent_material = true
+position = Vector2( -1.60205, 13.1432 )
+scale = Vector2( 1.211, 1 )
+z_index = 20
+frames = SubResource( 1 )
+frame = 1
+speed_scale = 2.0
+playing = true
+centered = false
+
+[node name="ROLLTR4" type="AnimatedSprite" parent="Node2D2"]
+use_parent_material = true
+position = Vector2( -8.59558, 25.957 )
+scale = Vector2( 1.211, 1 )
+z_index = 20
+frames = SubResource( 1 )
+frame = 7
+speed_scale = 2.0
+playing = true
+centered = false
+
+[node name="ROLLTR3" type="AnimatedSprite" parent="Node2D2"]
+use_parent_material = true
+position = Vector2( -17.1089, 39.804 )
+scale = Vector2( 1.211, 1 )
+z_index = 20
+frames = SubResource( 1 )
+frame = 6
+speed_scale = 2.0
+playing = true
 centered = false
 
 [node name="EINGANG5 42" type="Sprite" parent="."]
 use_parent_material = true
-position = Vector2( 315, 427 )
-z_index = 19
+position = Vector2( 315.381, 424.486 )
+scale = Vector2( 1, 1.91826 )
+z_index = 41
 texture = ExtResource( 10 )
 centered = false
 
 [node name="EINGANG2 43" type="Sprite" parent="."]
 use_parent_material = true
 position = Vector2( 318, 386 )
-z_index = 20
+z_index = 41
 texture = ExtResource( 11 )
 centered = false
 
 [node name="EINGANG7 44" type="Sprite" parent="."]
 use_parent_material = true
-position = Vector2( 243, 387 )
-z_index = 20
+position = Vector2( 237.268, 387 )
+scale = Vector2( 1.16376, 1.3439 )
+z_index = 29
 texture = ExtResource( 12 )
 centered = false
 
 [node name="EINGANG8 45" type="Sprite" parent="."]
 use_parent_material = true
-position = Vector2( 401, 384 )
-z_index = 20
+position = Vector2( 393.296, 384 )
+scale = Vector2( 1.21399, 1.47393 )
+z_index = 42
 texture = ExtResource( 13 )
 centered = false
 
@@ -380,7 +501,7 @@ centered = false
 [node name="EINGANG1 48" type="Sprite" parent="."]
 use_parent_material = true
 position = Vector2( 425, 380 )
-z_index = 20
+z_index = 45
 texture = ExtResource( 16 )
 centered = false
 
@@ -655,4 +776,4 @@ centered = false
 
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="."]
 z_index = 100
-navpoly = SubResource( 1 )
+navpoly = SubResource( 2 )
